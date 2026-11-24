@@ -1,0 +1,559 @@
+<meta name="dash-one-writer">
+<meta name="dash-form" content="dashboard">
+<style>
+#dash-root { --dash-gutter: 0; }
+.tr { --ap-red: #FA0500; --ap-red-a: #E00400; --ap-deep: #6B0000; --ap-ink: #242322; --ap-paper: #F7F4F2; --ap-card: #FFFFFF; --ap-line: #E7E1DC; --ap-grey: #B5ADA7;
+  --ap-display: "Swiss Posters", "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ap-sans: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ap-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --st-0: var(--ap-red); --st-1: var(--ap-deep); --st-2: var(--ap-ink); --st-3: var(--ap-grey);
+  background: var(--ap-paper); color: var(--ap-ink); font-family: var(--ap-sans); font-size: 16px; line-height: 1.5;
+  display: flex; flex-direction: column; gap: 28px; padding: 0 clamp(14px, 3vw, 32px) 40px; min-height: 100%; }
+.tr-bar { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-family: var(--ap-mono); font-size: 12px; text-transform: uppercase; color: var(--ap-red-a); border-bottom: 1px solid var(--ap-red); padding: 8px 0; margin: 0 calc(-1 * clamp(14px, 3vw, 32px)); padding-left: clamp(14px, 3vw, 32px); padding-right: clamp(14px, 3vw, 32px); }
+.tr-bar span { white-space: nowrap; }
+.tr-head { display: flex; flex-direction: column; gap: 14px; }
+.tr-brand { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.tr-logo { display: inline-flex; line-height: 0; }
+.tr-logo-svg { height: 24px; width: auto; display: block; }
+.tr-nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.tr-nav a { color: var(--ap-red); border: 1.5px solid var(--ap-red); border-radius: 999px; padding: 2px 12px; text-decoration: none; font-size: 15px; }
+.tr-nav a:hover { background: var(--ap-red); color: #fff; }
+.tr h1 { font-family: var(--ap-display); font-weight: 700; color: var(--ap-red); font-size: clamp(64px, 14vw, 168px); line-height: .86; letter-spacing: -0.045em; margin: 8px 0 0; }
+.tr h2 { font-family: var(--ap-display); font-weight: 700; color: var(--ap-ink); font-size: clamp(24px, 3.2vw, 34px); line-height: 1; letter-spacing: -0.03em; margin: 0 0 12px; }
+.tr-tag { font-family: var(--ap-mono); color: var(--ap-red-a); font-size: clamp(16px, 2vw, 20px); line-height: 1.15; letter-spacing: -0.04em; margin: 0; font-weight: 500; }
+.tr-sub { font-family: var(--ap-mono); color: var(--ap-ink); opacity: .75; font-size: 12px; text-transform: uppercase; margin: 0; }
+.tr-lede { font-size: clamp(18px, 2vw, 22px); max-width: 62ch; margin: 0; line-height: 1.35; letter-spacing: -0.01em; }
+.tr-lede b { color: var(--ap-red); font-weight: 600; }
+.tr-muted { color: var(--ap-ink); opacity: .7; font-size: 14px; line-height: 1.5; margin: 0; }
+.tr-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.tr-card { background: var(--ap-card); border-radius: 16px; padding: 20px; }
+.tr-tile .tr-num { font-family: var(--ap-display); font-weight: 700; color: var(--ap-red); font-size: 72px; line-height: .95; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; margin: 6px 0; }
+.tr-tile .tr-lbl { display: flex; align-items: center; gap: 8px; font-family: var(--ap-mono); font-size: 13px; text-transform: uppercase; }
+.tr-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+.tr-curvebox { position: relative; min-height: 260px; }
+.tr-zones { display: grid; grid-template-columns: 38fr 17fr 20fr 25fr; font-family: var(--ap-mono); font-size: 12px; text-transform: uppercase; color: var(--ap-red-a); margin-top: 6px; }
+.tr-zones span { border-top: 1px solid var(--ap-red); padding-top: 6px; text-align: center; }
+.tr-tip { position: absolute; pointer-events: none; background: var(--ap-ink); color: #fff; border-radius: 10px; padding: 8px 10px; font-family: var(--ap-mono); font-size: 12px; line-height: 1.35; max-width: 240px; z-index: 5; }
+.tr-tip b { display: block; margin-bottom: 3px; font-family: var(--ap-sans); font-size: 14px; font-weight: 600; }
+.tr-filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+.tr-filters label { display: flex; flex-direction: column; gap: 4px; font-family: var(--ap-mono); font-size: 11px; text-transform: uppercase; color: var(--ap-red-a); }
+.tr .dash-select { background-color: var(--ap-card); color: var(--ap-ink); border: 1.5px solid var(--ap-red); border-radius: 999px; font-family: var(--ap-sans); font-size: 15px; }
+.tr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 16px; }
+.tr-t { display: flex; flex-direction: column; gap: 10px; }
+.tr-t h3 { margin: 0; font-family: var(--ap-display); font-weight: 700; font-size: 24px; line-height: 1.02; letter-spacing: -0.025em; }
+.tr-t.tr-flash { outline: 2px solid var(--ap-red); outline-offset: 2px; }
+.tr-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.tr-chip { font-size: 13px; border: 1.5px solid var(--ap-red); color: var(--ap-red); border-radius: 999px; padding: 1px 10px; display: inline-flex; align-items: center; gap: 6px; }
+.tr-chip.act { background: var(--ap-red); color: #fff; }
+.tr-chip.new { background: var(--ap-ink); border-color: var(--ap-ink); color: #fff; }
+.tr-chip.skip { border-color: var(--ap-grey); color: var(--ap-ink); opacity: .7; }
+.tr-k { font-family: var(--ap-mono); font-size: 11px; color: var(--ap-red-a); text-transform: uppercase; letter-spacing: .02em; margin: 4px 0 0; }
+.tr-v { margin: 0; line-height: 1.45; font-size: 15px; }
+.tr-apps { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.tr-apps li { font-size: 15px; line-height: 1.4; }
+.tr-apps li b { font-weight: 600; }
+.tr-src { font-family: var(--ap-mono); font-size: 11px; color: var(--ap-ink); opacity: .75; border-top: 1px solid var(--ap-line); padding-top: 8px; margin: 4px 0 0; }
+.tr-src a { color: var(--ap-red-a); }
+.tr-actlist { margin: 0; padding-left: 1.3em; line-height: 1.75; }
+.tr-actlist li::marker { color: var(--ap-red); font-family: var(--ap-mono); }
+.tr-actlist button { all: unset; cursor: pointer; font-weight: 600; text-decoration: underline; text-decoration-color: var(--ap-red); text-underline-offset: 3px; }
+.tr-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.tr details summary { cursor: pointer; font-family: var(--ap-mono); text-transform: uppercase; font-size: 13px; color: var(--ap-red-a); }
+.tr details p { font-size: 15px; line-height: 1.5; max-width: 75ch; }
+.tr-foot { font-family: var(--ap-mono); font-size: 12px; text-transform: uppercase; color: var(--ap-red-a); border-top: 1px solid var(--ap-red); padding-top: 10px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.tr-refresh { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.tr-btn { font: inherit; font-size: 15px; background: var(--ap-red); color: #fff; border: 1.5px solid var(--ap-red); border-radius: 999px; padding: 6px 16px; cursor: pointer; }
+.tr-btn:hover { background: var(--ap-red-a); }
+.tr-btn:disabled { opacity: .5; cursor: default; }
+.tr-hooks { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.tr-hook { display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 16px 0; border-top: 1px solid var(--ap-line); }
+.tr-hook:first-child { border-top: 0; }
+.tr-rank { font-family: var(--ap-display); font-weight: 700; color: var(--ap-red); font-size: 48px; line-height: .9; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.tr-hook q { font-family: var(--ap-display); font-weight: 700; font-size: 22px; line-height: 1.1; letter-spacing: -0.02em; display: block; }
+.tr-hook-body { display: flex; flex-direction: column; gap: 6px; }
+.tr-shape { font-family: var(--ap-mono); font-size: 14px; background: var(--ap-paper); border-radius: 8px; padding: 6px 10px; margin: 0; }
+.tr-refresh[hidden] { display: none; }
+.tr-bars { position: relative; min-height: 300px; }
+.tr-struct { font-family: var(--ap-mono); font-size: 18px; line-height: 1.25; letter-spacing: -0.03em; color: var(--ap-red-a); margin: 0; }
+.tr-links { display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 0; list-style: none; font-size: 14px; }
+.tr-links a { color: var(--ap-red-a); }
+@media print { .tr-filters, .tr-nav { display: none; } }
+</style>
+
+<div class="tr">
+  <div class="tr-bar" id="bar"><span>SYD: <span data-draw="clock-syd">—</span> AEDT</span><span>The Tea · weekly social trend radar</span><span>Week of <span data-draw="week-bar" data-source="this_week" data-field="week" data-row="0">—</span></span></div>
+  <header id="top" class="tr-head">
+    <div class="tr-brand"><span class="tr-logo"><svg class="tr-logo-svg" role="img" aria-label="apparent" viewBox="0 0 1182 261" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M117.701 102.257V152.332C114.032 126.392 93.4232 105.876 67.3856 102.257H117.701ZM175.956 217.261V159.589C175.956 95.9478 124.198 44.3564 60.3506 44.3564H2.32758V102.257H50.9032C22.1398 106.256 0 130.869 0 160.64C0 193.199 26.4815 219.595 59.146 219.595C88.9835 219.595 113.653 197.572 117.704 168.947V217.265H175.956V217.261Z" fill="#FA0500"/><path d="M325.683 166.171C325.683 184.073 321.037 190.238 306.779 190.238C293.28 190.238 288.917 185.724 288.917 167.68V164.378C288.917 153.545 291.465 150.539 304.527 141.215L325.683 126.021V166.171ZM326.584 217.142H365.293V91.1207C365.293 55.9364 348.937 41.0398 307.371 41.0398C268.508 41.0398 249.9 55.6269 249.9 89.7665V103.451H288.004V89.0184C288.004 75.6308 294.605 69.7625 307.808 69.7625C321.012 69.7625 325.812 75.0247 325.812 84.5043V85.1105C325.812 90.6693 322.659 92.9264 311.862 100.755L276.757 125.57C255.15 141.06 249.295 147.676 249.295 169.034V178.811C249.295 212.189 264.596 220.921 292.804 220.921C308.104 220.921 320.407 215.207 326.558 206.037V217.168L326.584 217.142ZM450.251 164.507C450.251 181.648 445.451 187.813 431.952 187.813C418.453 187.813 413.498 181.648 413.498 164.507V96.9891C413.498 79.8483 418.453 73.5286 431.952 73.5286C445.451 73.5286 450.251 79.8483 450.251 96.9891V164.507ZM489.861 173.832V87.6642C489.861 53.2279 474.251 41.1946 447.549 41.1946C432.248 41.1946 419.637 46.9081 413.486 56.0783V44.3544H373.876V260.142H413.486V205.405C419.637 214.575 432.235 220.289 447.549 220.289C474.251 220.289 489.861 208.114 489.861 173.819M573.88 164.507C573.88 181.648 569.08 187.813 555.568 187.813C542.056 187.813 537.114 181.648 537.114 164.507V96.9891C537.114 79.8483 542.069 73.5286 555.568 73.5286C569.067 73.5286 573.88 79.8483 573.88 96.9891V164.507ZM613.489 173.832V87.6642C613.489 53.2279 597.88 41.1946 571.177 41.1946C555.877 41.1946 543.265 46.9081 537.114 56.0783V44.3544H497.505V260.142H537.114V205.405C543.265 214.575 555.864 220.289 571.177 220.289C597.88 220.289 613.489 208.114 613.489 173.819M697.521 166.171C697.521 184.073 692.876 190.238 678.617 190.238C665.118 190.238 660.756 185.724 660.756 167.68V164.378C660.756 153.545 663.304 150.539 676.365 141.215L697.521 126.021V166.171ZM698.422 217.142H737.131V91.1207C737.131 55.9364 720.775 41.0398 679.209 41.0398C640.346 41.0398 621.738 55.6269 621.738 89.7665V103.451H659.842V89.0184C659.842 75.6308 666.444 69.7625 679.647 69.7625C692.85 69.7625 697.65 75.0247 697.65 84.5043V85.1105C697.65 90.6693 694.497 92.9264 683.701 100.755L648.595 125.57C626.989 141.06 621.133 147.676 621.133 169.034V178.811C621.133 212.189 636.434 220.921 664.642 220.921C679.943 220.921 692.245 215.207 698.396 206.037V217.168L698.422 217.142ZM816.054 137.449H852.82V85.5619C852.82 53.2279 841.573 41.1946 815.153 41.1946C801.5 41.1946 790.549 46.302 784.397 55.7816V44.3544H744.788V217.142H784.397V94.2806C784.397 79.2421 788.605 73.5286 800.303 73.5286C812.001 73.5286 816.054 79.2421 816.054 94.2806V137.436V137.449ZM900.228 111.731V92.4879C900.228 75.489 905.182 69.7754 918.681 69.7754C932.18 69.7754 936.981 75.489 936.981 92.4879V111.731H900.215H900.228ZM976.603 167.216V155.041H936.993V166.919C936.993 184.215 932.039 189.774 918.694 189.774C905.349 189.774 900.241 184.215 900.241 166.919V142.259H976.616V94.2935C976.616 55.3431 960.26 41.0656 918.694 41.0656C877.129 41.0656 860.631 55.356 860.631 94.2935V167.229C860.631 206.024 876.987 220.315 918.694 220.315C960.401 220.315 976.616 206.024 976.616 167.229M1060.62 217.142H1100.23V87.6642C1100.23 53.2279 1084.62 41.1946 1057.77 41.1946C1042.46 41.1946 1029.85 46.9081 1023.7 56.0783V44.3544H984.247V217.142H1023.7V96.9891C1023.7 79.8483 1028.66 73.5286 1042.16 73.5286C1055.65 73.5286 1060.61 79.8483 1060.61 96.9891V217.142H1060.62ZM1161.25 169.473V75.1923H1181.81V44.3673H1161.25V0H1121.65V44.3673H1107.09V75.1923H1121.65V179.559C1121.65 207.985 1129.75 217.155 1156 217.155H1181.81V186.33H1177.01C1162.9 186.33 1161.25 183.918 1161.25 169.486" fill="#FA0500"/></svg></span><nav class="tr-nav"><a href="#lifecycle">Lifecycle</a><a href="#this-week">This week</a><a href="#hooks">Hooks</a><a href="#language">Language</a><a href="#trends">Trends</a><a href="#method">Method</a></nav></div>
+    <h1>The Tea</h1>
+    <p class="tr-tag">What's brewing on social this week, and what brands can do with it.</p>
+    <p class="tr-sub">Week of <span data-draw="week" data-source="this_week" data-field="week" data-row="0">—</span> · Instagram · TikTok · Snapchat · Reddit · Pinterest · Meta (Facebook &amp; Threads) · LinkedIn · Fresh every weekday morning</p>
+    <p class="tr-lede"><b data-draw="n-act" data-source="action_counts" data-field="count" data-where="action=Act this week">—</b> trends are worth acting on this week. Across the radar, <b data-draw="n-emerging" data-source="stage_counts" data-field="count" data-where="stage=Emerging">—</b> are emerging, <b data-draw="n-peaking" data-source="stage_counts" data-field="count" data-where="stage=Peaking">—</b> peaking, <b data-draw="n-holding" data-source="stage_counts" data-field="count" data-where="stage=Holding">—</b> holding steady and <b data-draw="n-declining" data-source="stage_counts" data-field="count" data-where="stage=Declining">—</b> declining.</p>
+    <div class="tr-refresh"><button class="tr-btn" id="refresh-btn" type="button">Refresh trends now</button><span class="tr-muted" data-draw="refresh-status"></span></div>
+  </header>
+
+  <section id="stages" class="tr-tiles">
+    <div class="tr-card tr-tile"><div class="tr-lbl"><span class="tr-dot" data-draw="sw-0"></span>Emerging</div><div class="tr-num" data-draw="t-emerging" data-source="stage_counts" data-field="count" data-where="stage=Emerging">—</div><p class="tr-muted">Creator counts rising week on week. Earliest window, most reach.</p></div>
+    <div class="tr-card tr-tile"><div class="tr-lbl"><span class="tr-dot" data-draw="sw-1"></span>Peaking</div><div class="tr-num" data-draw="t-peaking" data-source="stage_counts" data-field="count" data-where="stage=Peaking">—</div><p class="tr-muted">Everywhere now. Still works, but needs a sharp angle.</p></div>
+    <div class="tr-card tr-tile"><div class="tr-lbl"><span class="tr-dot" data-draw="sw-2"></span>Holding steady</div><div class="tr-num" data-draw="t-holding" data-source="stage_counts" data-field="count" data-where="stage=Holding">—</div><p class="tr-muted">Formats and shifts with staying power. Plan them into series.</p></div>
+    <div class="tr-card tr-tile"><div class="tr-lbl"><span class="tr-dot" data-draw="sw-3"></span>Declining</div><div class="tr-num" data-draw="t-declining" data-source="stage_counts" data-field="count" data-where="stage=Declining">—</div><p class="tr-muted">Creator counts falling. Joining now reads as late.</p></div>
+  </section>
+
+  <section id="lifecycle" class="tr-card">
+    <h2>Where each trend sits in its lifecycle</h2>
+    <p class="tr-muted">Point at or tap a dot for the trend; click to jump to its card. Position along the curve is an editorial placement based on the week's signals, not a measured score.</p>
+    <div class="tr-curvebox" data-draw="curve" data-source="this_week"></div>
+    <div class="tr-zones"><span>Emerging</span><span>Peaking</span><span>Holding</span><span>Declining</span></div>
+  </section>
+
+  <section id="this-week" class="tr-two">
+    <div class="tr-card">
+      <h2>Brief these this week</h2>
+      <ol class="tr-actlist" data-draw="actlist" data-source="this_week"></ol>
+    </div>
+    <div class="tr-card">
+      <h2>Moved since last update</h2>
+      <p class="tr-muted tr-firstweek">This is the first edition. From the next morning update, this panel shows which trends changed stage and which are new on the radar.</p>
+      <ul class="tr-actlist" data-draw="movement" data-source="movement"></ul>
+    </div>
+  </section>
+
+  <section id="hooks" class="tr-card">
+    <h2>Top 10 hooks this week</h2>
+    <p class="tr-muted">Opening lines from the biggest new posts tracked this week, ranked by views. Each comes with the reusable shape and a client twist.</p>
+    <ol class="tr-hooks" data-draw="hooks" data-source="lang_this_week"></ol>
+  </section>
+
+  <section id="hook-types" class="tr-card">
+    <h2>Which hook types are landing</h2>
+    <p class="tr-muted">Share of TikToks reaching the tracker's virality threshold, by hook type. The faint tick is last week.</p>
+    <div class="tr-bars" data-draw="hooktypes" data-source="lang_this_week"></div>
+  </section>
+
+  <section id="language">
+    <h2>Language structures to borrow</h2>
+    <p class="tr-muted">Fill-in-the-blank lines from this week's formats, for captions, on-screen text and scripts.</p>
+    <div class="tr-grid" data-draw="structures" data-source="lang_this_week"></div>
+  </section>
+
+  <section id="trends">
+    <h2>Trends and what brands can do with them</h2>
+    <div class="tr-filters">
+      <label>Platform<select class="dash-select" data-draw="f-platform" aria-label="Platform" data-source="this_week"></select></label>
+      <label>Stage<select class="dash-select" id="f-stage" aria-label="Stage">
+        <option value="">All stages</option><option>Emerging</option><option>Peaking</option><option>Holding</option><option>Declining</option>
+      </select></label>
+      <label>Brand lens<select class="dash-select" id="f-lens" aria-label="Brand lens">
+        <option value="">All clients</option><option value="app_google">Google</option><option value="app_optus">Optus</option><option value="app_splend">Splend</option><option value="app_kinetico">Kinetico</option><option value="app_tiptop">Tip Top</option><option value="app_b2b">B2B brands</option><option value="app_b2c">B2C brands</option><option value="app_d2c">D2C brands</option>
+      </select></label>
+      <label>Action<select class="dash-select" id="f-action" aria-label="Action">
+        <option value="">All actions</option><option>Act this week</option><option>Plan for Q1</option><option>Watch</option><option>Skip</option>
+      </select></label>
+    </div>
+    <div class="tr-grid" data-draw="cards" data-source="this_week"></div>
+  </section>
+
+  <details id="method" class="tr-card">
+    <summary>How this radar works, and what it can't see</summary>
+    <p><b>Stages.</b> Emerging means creator counts are rising week on week, or the trend is under two weeks old. Peaking means trackers label it Peak, or it's at maximum participation. Holding means a format or platform shift with steady use. Declining means creator counts are falling or trackers label it Fading. Creator counts beat total views: a trend can keep piling up views long after people stop making it.</p>
+    <p><b>Sources.</b> Public trend trackers (Virlo, SocialPilot, SocialBee), platform newsrooms (Snap, Meta, LinkedIn, Pinterest) and industry research (Sprout Social, Brand24, Emplifi). Each card names its source and date.</p>
+    <p><b>Blind spots.</b> This isn't platform API data. TikTok and Instagram signals are strongest. Snapchat, Facebook, LinkedIn and Reddit signals are mostly platform announcements and research, not live trend counts. Most trackers are US-centric, so seasonal trends are flipped for Australia's summer. Single-source trends are marked Medium or Low confidence.</p>
+    <p><b>Before it goes in a deck.</b> Each card has a "Validate" line: the Brandwatch query or GWI cut that would confirm it with the agency's own tools.</p>
+  </details>
+  <div class="tr-foot"><span>The Tea by Apparent Social</span><span>Spill it responsibly: validate before it goes in a deck</span></div>
+</div>
+
+<script>
+(function () {
+  const STAGES = ['Emerging', 'Peaking', 'Holding', 'Declining'];
+  const ACTION_ORDER = { 'Act this week': 0, 'Plan for Q1': 1, 'Watch': 2, 'Skip': 3 };
+  const LENSES = [['app_google','Google'],['app_optus','Optus'],['app_splend','Splend'],['app_kinetico','Kinetico'],['app_tiptop','Tip Top'],['app_b2b','B2B'],['app_b2c','B2C'],['app_d2c','D2C']];
+  window.TR = { STAGES, ACTION_ORDER, LENSES, f: { platform: '', stage: '', lens: '', action: '' },
+    stageColor: (s) => 'var(--st-' + Math.max(0, STAGES.indexOf(s)) + ')',
+    safeUrl: (u) => (typeof u === 'string' && /^https?:\/\//.test(u)) ? u : null,
+    fmtWeek: (w) => { const d = new Date(w + 'T00:00:00Z'); return isNaN(d) ? String(w) : d3.utcFormat('%-d %B %Y')(d); }
+  };
+
+  dash.calc('this_week', {
+    title: 'This week’s trends',
+    description: 'Trend rows from the latest week in the radar file.',
+    inputs: ['trends'],
+    fn: (trends) => {
+      if (!Array.isArray(trends) || !trends.length) return [];
+      const latest = d3.max(trends, (r) => r.week);
+      return trends.filter((r) => r.week === latest);
+    }
+  });
+  dash.calc('lang_this_week', {
+    title: 'This week\u2019s hooks and language',
+    description: 'Hooks, hook-type hit rates and language structures from the latest week in the language file.',
+    inputs: ['language'],
+    fn: (language) => {
+      if (!Array.isArray(language) || !language.length) return [];
+      const latest = d3.max(language, (r) => r.week);
+      return language.filter((r) => r.week === latest);
+    }
+  });
+  dash.calc('stage_counts', {
+    title: 'Trends by stage',
+    description: 'Number of this week’s trends in each lifecycle stage.',
+    inputs: ['this_week'],
+    fn: (rows) => ['Emerging', 'Peaking', 'Holding', 'Declining'].map((stage) => ({ stage, count: rows.filter((r) => r.stage === stage).length }))
+  });
+  dash.calc('action_counts', {
+    title: 'Trends by recommended action',
+    description: 'Number of this week’s trends per recommended action.',
+    inputs: ['this_week'],
+    fn: (rows) => ['Act this week', 'Plan for Q1', 'Watch', 'Skip'].map((action) => ({ action, count: rows.filter((r) => r.action === action).length }))
+  });
+  dash.calc('movement', {
+    title: 'Stage changes since last week',
+    description: 'Trends that are new this week or whose stage changed from the previous week.',
+    inputs: ['trends'],
+    fn: (trends) => {
+      if (!Array.isArray(trends) || !trends.length) return [];
+      const weeks = Array.from(new Set(trends.map((r) => r.week))).sort();
+      if (weeks.length < 2) return [];
+      const cur = weeks[weeks.length - 1], prev = weeks[weeks.length - 2];
+      const before = new Map(trends.filter((r) => r.week === prev).map((r) => [r.id, r.stage]));
+      return trends.filter((r) => r.week === cur)
+        .map((r) => ({ id: r.id, trend: r.trend, from: before.get(r.id) || 'New', to: r.stage }))
+        .filter((m) => m.from !== m.to);
+    }
+  });
+
+  document.querySelectorAll('#f-stage, #f-lens, #f-action').forEach((sel) => {
+    sel.addEventListener('change', () => { TR.f[sel.id.slice(2)] = sel.value; dash.draw('cards'); });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const num = (calc, key, val) => (el) => {
+    const d = dash.data(calc);
+    el.classList.toggle('dash-skeleton', d.status === 'loading');
+    if (d.status !== 'ok' || !Array.isArray(d.data)) { el.textContent = '—'; return; }
+    const row = d.data.find((r) => r[key] === val);
+    el.textContent = row ? String(row.count) : '—';
+  };
+  TR.STAGES.forEach((s, i) => {
+    dash.draw('n-' + s.toLowerCase(), num('stage_counts', 'stage', s));
+    dash.draw('t-' + s.toLowerCase(), num('stage_counts', 'stage', s));
+    dash.draw('sw-' + i, (el) => { el.style.background = 'var(--st-' + i + ')'; });
+  });
+  dash.draw('n-act', num('action_counts', 'action', 'Act this week'));
+  dash.draw('week-bar', (el) => {
+    const d = dash.data('this_week');
+    el.textContent = (d.status === 'ok' && d.data.length) ? TR.fmtWeek(d.data[0].week) : '—';
+  });
+  dash.draw('clock-syd', {
+    mount: (el) => {
+      const fmt = new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Sydney', hour: '2-digit', minute: '2-digit', hour12: true });
+      const tick = () => { el.textContent = fmt.format(new Date()).toUpperCase(); };
+      tick(); return setInterval(tick, 20000);
+    },
+    update: () => {},
+    unmount: (el, t) => clearInterval(t)
+  });
+  dash.draw('week', (el) => {
+    const d = dash.data('this_week');
+    el.textContent = (d.status === 'ok' && d.data.length) ? TR.fmtWeek(d.data[0].week) : '—';
+  });
+
+  window.TR.jump = (id) => {
+    TR.f = { platform: '', stage: '', lens: TR.f.lens, action: '' };
+    document.querySelectorAll('#f-stage, #f-action').forEach((s) => { s.value = ''; });
+    document.querySelectorAll('[data-draw="f-platform"]').forEach((s) => { s.value = ''; });
+    dash.draw('cards');
+    requestAnimationFrame(() => {
+      const card = document.getElementById('trend-' + id);
+      if (!card) return;
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('tr-flash');
+      setTimeout(() => card.classList.remove('tr-flash'), 1600);
+    });
+  };
+
+  dash.draw('actlist', (el) => {
+    const d = dash.data('this_week');
+    el.replaceChildren();
+    if (d.status === 'error') { const li = document.createElement('li'); li.textContent = 'Couldn’t load this week’s trends.'; el.append(li); return; }
+    if (d.status !== 'ok') return;
+    d.data.filter((r) => r.action === 'Act this week')
+      .sort((a, b) => TR.STAGES.indexOf(a.stage) - TR.STAGES.indexOf(b.stage))
+      .forEach((r) => {
+        const li = document.createElement('li');
+        const b = document.createElement('button');
+        b.textContent = r.trend;
+        b.setAttribute('data-source', 'this_week'); b.setAttribute('data-field', 'trend'); b.setAttribute('data-where', 'id=' + encodeURIComponent(r.id));
+        b.onclick = () => TR.jump(r.id);
+        const s = document.createElement('span');
+        s.className = 'tr-muted'; s.textContent = ' · ' + r.stage + ' · ' + r.platforms;
+        li.append(b, s); el.append(li);
+      });
+  });
+
+  dash.draw('movement', (el) => {
+    const d = dash.data('movement');
+    el.replaceChildren();
+    const has = d.status === 'ok' && Array.isArray(d.data) && d.data.length > 0;
+    document.querySelectorAll('.tr-firstweek').forEach((p) => { p.hidden = has; });
+    if (!has) return;
+    d.data.forEach((m) => {
+      const li = document.createElement('li');
+      const b = document.createElement('b'); b.textContent = m.trend;
+      const s = document.createElement('span'); s.textContent = ': ' + m.from + ' → ' + m.to;
+      li.append(b, s); el.append(li);
+    });
+  });
+
+  dash.draw('f-platform', (sel) => {
+    const d = dash.data('this_week');
+    const set = new Set();
+    if (d.status === 'ok') d.data.forEach((r) => String(r.platforms).split('·').forEach((p) => {
+      const t = p.replace(/\(.*?\)/g, '').trim();
+      if (t && !/^All platforms/i.test(t)) set.add(t);
+    }));
+    sel.replaceChildren(new Option('All platforms', ''), ...Array.from(set).sort().map((p) => new Option(p, p)));
+    sel.value = TR.f.platform;
+    sel.onchange = () => { TR.f.platform = sel.value; dash.draw('cards'); };
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const pts = [[0, 0.04], [18, 0.3], [34, 0.72], [47, 1], [56, 0.88], [66, 0.8], [75, 0.7], [88, 0.32], [100, 0.08]];
+  const yAt = (x) => {
+    for (let i = 1; i < pts.length; i++) {
+      if (x <= pts[i][0]) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; return y0 + (y1 - y0) * (x - x0) / (x1 - x0); }
+    }
+    return pts[pts.length - 1][1];
+  };
+  dash.draw('curve', {
+    mount: (el) => {
+      const svg = d3.select(el).append('svg').attr('role', 'img').attr('aria-label', 'Lifecycle curve with each trend placed as emerging, peaking, holding or declining').style('display', 'block').style('width', '100%');
+      const tip = d3.select(el).append('div').attr('class', 'tr-tip').style('display', 'none');
+      return { svg, tip };
+    },
+    update: (el, { svg, tip }) => {
+      const d = dash.data('this_week');
+      const w = Math.max(280, el.clientWidth), h = 240, m = { t: 18, r: 14, b: 10, l: 14 };
+      svg.attr('viewBox', `0 0 ${w} ${h}`).attr('height', h);
+      svg.selectAll('*').remove();
+      if (d.status === 'error') { svg.append('text').attr('x', m.l).attr('y', 30).style('fill', '#242322').text('Couldn’t load trends.'); return; }
+      if (d.status !== 'ok') return;
+      const x = d3.scaleLinear([0, 100], [m.l, w - m.r]);
+      const y = d3.scaleLinear([0, 1.08], [h - m.b, m.t]);
+      const line = d3.line().x((p) => x(p[0])).y((p) => y(p[1]));
+      const fine = d3.range(0, 100.5, 1).map((v) => [v, yAt(v)]);
+      [38, 55, 75].forEach((b) => svg.append('line').attr('x1', x(b)).attr('x2', x(b)).attr('y1', m.t).attr('y2', h - m.b).style('stroke', '#E7E1DC').style('stroke-dasharray', '3 4'));
+      svg.append('path').attr('d', line(fine)).style('fill', 'none').style('stroke', '#242322').style('stroke-width', 2);
+      const rows = d.data.slice().sort((a, b) => a.curve_pos - b.curve_pos);
+      const placed = [];
+      const dots = rows.map((r) => {
+        const cx = x(+r.curve_pos); let cy = y(yAt(+r.curve_pos));
+        while (placed.some((p) => Math.abs(p[0] - cx) < 11 && Math.abs(p[1] - cy) < 11)) cy += 11;
+        placed.push([cx, cy]); return { r, cx, cy };
+      });
+      const show = (ev, o) => {
+        const box = el.getBoundingClientRect();
+        tip.style('display', 'block').html('');
+        tip.append('b').text(o.r.trend);
+        tip.append('span').text(o.r.stage + ' · ' + o.r.platforms + ' · ' + o.r.action);
+        const tw = tip.node().offsetWidth;
+        let left = o.cx / w * box.width + 12; if (left + tw > box.width) left = o.cx / w * box.width - tw - 12;
+        tip.style('left', Math.max(0, left) + 'px').style('top', Math.max(0, o.cy - 10) + 'px');
+      };
+      svg.selectAll('circle.tr-c').data(dots).join('circle').attr('class', 'tr-c')
+        .attr('cx', (o) => o.cx).attr('cy', (o) => o.cy).attr('r', 6)
+        .style('fill', (o) => TR.stageColor(o.r.stage)).style('stroke', '#FFFFFF').style('stroke-width', 1.5).style('cursor', 'pointer')
+        .on('pointerenter', show).on('pointermove', show).on('pointerleave', () => tip.style('display', 'none'))
+        .on('click', (ev, o) => TR.jump(o.r.id));
+    }
+  });
+
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const mark = (n, id, field) => { n.setAttribute('data-source', 'this_week'); n.setAttribute('data-field', field); n.setAttribute('data-where', 'id=' + encodeURIComponent(id)); return n; };
+
+  dash.draw('cards', (grid) => {
+    const d = dash.data('this_week');
+    grid.replaceChildren();
+    if (d.status === 'error') { grid.append(el('p', 'tr-muted', 'Couldn’t load this week’s trends.')); return; }
+    if (d.status !== 'ok') { grid.append(el('p', 'tr-muted', '—')); return; }
+    const f = TR.f;
+    const mv = dash.data('movement');
+    const moved = new Map(mv.status === 'ok' && Array.isArray(mv.data) ? mv.data.map((m) => [m.id, m]) : []);
+    const rows = d.data.filter((r) =>
+      (!f.platform || String(r.platforms).includes(f.platform) || /^All platforms/i.test(r.platforms)) &&
+      (!f.stage || r.stage === f.stage) && (!f.action || r.action === f.action) &&
+      (!f.lens || (r[f.lens] && r[f.lens] !== '—'))
+    ).sort((a, b) => (TR.ACTION_ORDER[a.action] - TR.ACTION_ORDER[b.action]) || (TR.STAGES.indexOf(a.stage) - TR.STAGES.indexOf(b.stage)));
+    if (!rows.length) { grid.append(el('p', 'tr-muted', 'No trends match these filters.')); return; }
+    rows.forEach((r) => {
+      const c = el('article', 'tr-card tr-t'); c.id = 'trend-' + r.id;
+      c.append(mark(el('h3', null, r.trend), r.id, 'trend'));
+      const chips = el('div', 'tr-chips');
+      const st = mark(el('span', 'tr-chip'), r.id, 'stage'); const dot = el('span', 'tr-dot'); dot.style.background = TR.stageColor(r.stage); st.append(dot, document.createTextNode(r.stage)); chips.append(st);
+      chips.append(mark(el('span', 'tr-chip' + (r.action === 'Act this week' ? ' act' : r.action === 'Skip' ? ' skip' : ''), r.action), r.id, 'action'));
+      chips.append(mark(el('span', 'tr-chip', r.confidence + ' confidence'), r.id, 'confidence'));
+      chips.append(mark(el('span', 'tr-chip', r.kind), r.id, 'kind'));
+      const m = moved.get(r.id);
+      if (m) { const n = el('span', 'tr-chip new', m.from === 'New' ? 'New' : 'Was ' + m.from); n.setAttribute('data-source', 'movement'); n.setAttribute('data-field', 'from'); n.setAttribute('data-where', 'id=' + encodeURIComponent(r.id)); chips.prepend(n); }
+      c.append(chips);
+      c.append(mark(el('p', 'tr-muted', r.platforms), r.id, 'platforms'));
+      const block = (k, field) => { if (!r[field] || r[field] === '—') return; c.append(el('p', 'tr-k', k)); c.append(mark(el('p', 'tr-v', r[field]), r.id, field)); };
+      block('What it is', 'what'); block('Signal', 'signal'); block('Why it matters', 'why'); block('Where it goes next', 'next');
+      const lenses = f.lens ? TR.LENSES.filter((l) => l[0] === f.lens) : TR.LENSES;
+      const apps = lenses.filter((l) => r[l[0]] && r[l[0]] !== '—');
+      if (apps.length) {
+        c.append(el('p', 'tr-k', 'Brand applications'));
+        const ul = el('ul', 'tr-apps');
+        apps.forEach(([k, name]) => { const li = mark(el('li'), r.id, k); li.append(el('b', null, name + ': '), document.createTextNode(r[k])); ul.append(li); });
+        c.append(ul);
+      }
+      const exs = [1, 2, 3].filter((i) => TR.safeUrl(r['ex' + i + '_url']));
+      const sUrl = TR.safeUrl(r.search_url);
+      if (exs.length || sUrl) {
+        c.append(el('p', 'tr-k', 'See it in the wild'));
+        const ul = el('ul', 'tr-links');
+        exs.forEach((i) => { const li = el('li'); const a = mark(el('a', null, (r['ex' + i + '_label'] || 'Example post') + ' \u2197'), r.id, 'ex' + i + '_label'); a.href = r['ex' + i + '_url']; a.target = '_blank'; a.rel = 'noopener'; li.append(a); ul.append(li); });
+        if (sUrl) { const li = el('li'); const a = el('a', null, 'Search TikTok for more \u2197'); a.href = sUrl; a.target = '_blank'; a.rel = 'noopener'; li.append(a); ul.append(li); }
+        c.append(ul);
+      }
+      block('Validate', 'validate');
+      const src = el('p', 'tr-src'); src.append(document.createTextNode('Source: '));
+      [['source', 'source_url'], ['source2', 'source2_url']].forEach(([n, u], i) => {
+        if (!r[n]) return;
+        if (i) src.append(document.createTextNode(' · '));
+        const url = TR.safeUrl(r[u]);
+        const a = url ? el('a', null, r[n]) : el('span', null, r[n]);
+        if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; }
+        src.append(mark(a, r.id, n));
+      });
+      src.append(document.createTextNode(' · as of '), mark(el('span', null, TR.fmtWeek(r.as_of)), r.id, 'as_of'));
+      c.append(src);
+      grid.append(c);
+    });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const mark = (n, id, field) => { n.setAttribute('data-source', 'lang_this_week'); n.setAttribute('data-field', field); n.setAttribute('data-where', 'id=' + encodeURIComponent(id)); return n; };
+  const link = (text, url) => { const a = el('a', null, text); a.href = url; a.target = '_blank'; a.rel = 'noopener'; return a; };
+  const status = (box, d) => { if (d.status === 'error') { box.append(el('p', 'tr-muted', 'Couldn’t load this week’s hooks and language.')); return false; } if (d.status !== 'ok') { box.append(el('p', 'tr-muted', '—')); return false; } return true; };
+
+  dash.draw('hooks', (list) => {
+    const d = dash.data('lang_this_week');
+    list.replaceChildren();
+    if (!status(list, d)) return;
+    d.data.filter((r) => r.kind === 'Hook').sort((a, b) => a.rank - b.rank).slice(0, 10).forEach((r) => {
+      const li = el('li', 'tr-hook');
+      li.append(mark(el('div', 'tr-rank', String(r.rank)), r.id, 'rank'));
+      const body = el('div', 'tr-hook-body');
+      body.append(mark(el('q', null, r.text), r.id, 'text'));
+      const chips = el('div', 'tr-chips');
+      chips.append(mark(el('span', 'tr-chip', r.hook_type), r.id, 'hook_type'));
+      if (r.niche) chips.append(mark(el('span', 'tr-chip', r.niche), r.id, 'niche'));
+      if (r.platform) chips.append(mark(el('span', 'tr-chip', r.platform), r.id, 'platform'));
+      body.append(chips);
+      const meta = el('p', 'tr-src');
+      meta.append(mark(el('span', null, r.creator), r.id, 'creator'), document.createTextNode(' · '));
+      if (r.views != null) meta.append(mark(el('span', null, d3.format(',')(r.views)), r.id, 'views'), document.createTextNode(' views · '));
+      const u = TR.safeUrl(r.example_url); if (u) meta.append(link('Watch the post ↗', u), document.createTextNode(' · '));
+      const su = TR.safeUrl(r.source_url); meta.append(su ? link(r.source, su) : el('span', null, r.source));
+      body.append(el('p', 'tr-k', 'Steal the shape'), mark(el('p', 'tr-shape', r.template), r.id, 'template'));
+      body.append(mark(el('p', 'tr-v', r.why), r.id, 'why'));
+      if (r.brand_idea) body.append(el('p', 'tr-k', 'Client twist'), mark(el('p', 'tr-v', r.brand_idea), r.id, 'brand_idea'));
+      body.append(meta);
+      li.append(body); list.append(li);
+    });
+  });
+
+  dash.draw('hooktypes', {
+    mount: (box) => ({ svg: d3.select(box).append('svg').attr('role', 'img').attr('aria-label', 'Hit rate by hook type this week').style('display', 'block').style('width', '100%'), tip: d3.select(box).append('div').attr('class', 'tr-tip').style('display', 'none') }),
+    update: (box, { svg, tip }) => {
+      const d = dash.data('lang_this_week');
+      svg.selectAll('*').remove();
+      if (d.status === 'error') { svg.attr('height', 30).append('text').attr('y', 20).style('fill', '#242322').text('Couldn’t load hook types.'); return; }
+      if (d.status !== 'ok') return;
+      const rows = d.data.filter((r) => r.kind === 'Hook type' && r.hit_rate != null).sort((a, b) => b.hit_rate - a.hit_rate);
+      const w = Math.max(280, box.clientWidth), bh = 22, gap = 6, h = rows.length * (bh + gap) + 8;
+      svg.attr('viewBox', `0 0 ${w} ${h}`).attr('height', h);
+      const probe = svg.append('text').style('font-size', '13px').style('font-family', 'var(--ap-sans)');
+      let lw = 0; rows.forEach((r) => { probe.text(r.text); lw = Math.max(lw, probe.node().getComputedTextLength()); }); probe.remove();
+      lw = Math.min(lw + 10, w * 0.45);
+      const x = d3.scaleLinear([0, d3.max(rows, (r) => Math.max(r.hit_rate, r.prev_hit_rate || 0)) * 1.12], [lw, w - 6]);
+      rows.forEach((r, i) => {
+        const y = i * (bh + gap) + 4;
+        const g = svg.append('g').attr('data-source', 'lang_this_week').attr('data-field', 'hit_rate').attr('data-where', 'id=' + encodeURIComponent(r.id));
+        svg.append('text').attr('x', lw - 8).attr('y', y + bh / 2 + 4).attr('text-anchor', 'end').style('font-size', '13px').style('fill', '#242322').text(r.text);
+        g.append('rect').attr('x', lw).attr('y', y).attr('height', bh).attr('rx', 4).attr('width', Math.max(1, x(r.hit_rate) - lw)).style('fill', i < 3 ? 'var(--ap-red)' : 'var(--ap-deep)').style('opacity', i < 3 ? 1 : 0.55);
+        if (r.prev_hit_rate != null) svg.append('line').attr('x1', x(r.prev_hit_rate)).attr('x2', x(r.prev_hit_rate)).attr('y1', y - 2).attr('y2', y + bh + 2).style('stroke', '#242322').style('opacity', .35).style('stroke-width', 2);
+        const label = r.hit_rate.toFixed(1) + '%';
+        const inside = x(r.hit_rate) - lw > 52;
+        svg.append('text').attr('x', inside ? x(r.hit_rate) - 6 : x(r.hit_rate) + 6).attr('y', y + bh / 2 + 4).attr('text-anchor', inside ? 'end' : 'start').style('font-size', '12px').style('font-family', 'var(--ap-mono)').style('fill', inside ? '#fff' : '#242322').text(label);
+        g.on('pointerenter pointermove', (ev) => {
+          const b = box.getBoundingClientRect();
+          tip.style('display', 'block').html('');
+          tip.append('b').text(r.text);
+          tip.append('span').text(r.hit_rate.toFixed(1) + '% hit rate' + (r.prev_hit_rate != null ? ' (last week ' + r.prev_hit_rate.toFixed(1) + '%)' : ''));
+          tip.style('left', Math.min(b.width - 240, Math.max(0, ev.clientX - b.left + 10)) + 'px').style('top', (y / h * b.height + 26) + 'px');
+        }).on('pointerleave', () => tip.style('display', 'none'));
+      });
+    }
+  });
+
+  dash.draw('structures', (grid) => {
+    const d = dash.data('lang_this_week');
+    grid.replaceChildren();
+    if (!status(grid, d)) return;
+    d.data.filter((r) => r.kind === 'Structure').sort((a, b) => a.rank - b.rank).forEach((r) => {
+      const c = el('article', 'tr-card tr-t');
+      c.append(mark(el('p', 'tr-struct', r.template), r.id, 'template'));
+      if (r.stage) { const chips = el('div', 'tr-chips'); const st = mark(el('span', 'tr-chip'), r.id, 'stage'); const dot = el('span', 'tr-dot'); dot.style.background = TR.stageColor(r.stage); st.append(dot, document.createTextNode(r.stage)); chips.append(st); c.append(chips); }
+      c.append(mark(el('p', 'tr-v', r.why), r.id, 'why'));
+      if (r.brand_idea) c.append(el('p', 'tr-k', 'Client twist'), mark(el('p', 'tr-v', r.brand_idea), r.id, 'brand_idea'));
+      const src = el('p', 'tr-src');
+      const u = TR.safeUrl(r.example_url); if (u) src.append(link('See an example ↗', u), document.createTextNode(' · '));
+      const su = TR.safeUrl(r.source_url); src.append(document.createTextNode('Source: '), su ? link(r.source, su) : el('span', null, r.source));
+      c.append(src);
+      grid.append(c);
+    });
+  });
+
+  const TRIGGER = 'trig_01SKjt8EzGcvWY31q6iCpXVJ';
+  const SERVERS = ['Claude Code Remote', 'Claude_Code_Remote', 'claude-code-remote'];
+  dash.draw('refresh-status', {
+    mount: (msg) => {
+      const handler = async (ev) => {
+        const btn = ev.currentTarget;
+        btn.disabled = true;
+        msg.textContent = 'Putting the kettle on…';
+        let mcp = null;
+        try { mcp = await claude.use('mcp'); } catch (e) { mcp = null; }
+        if (!mcp) { msg.textContent = 'Refreshing needs the Claude app with your connectors. The radar still refreshes itself every Tuesday.'; btn.disabled = false; return; }
+        let last = null;
+        for (const s of SERVERS) {
+          try {
+            await mcp.callTool(s, 'fire_trigger', { trigger_id: TRIGGER, text: 'Manual refresh requested from The Tea dashboard.' });
+            msg.textContent = 'Brewing. A fresh research run has started: new trends, hooks and posts land in about 15–20 minutes. Reload the page then.';
+            setTimeout(() => { btn.disabled = false; }, 10 * 60 * 1000);
+            return;
+          } catch (e) { last = e; if (!(e && /not_connected|not_found|unknown/i.test(String(e.code || e.message)))) break; }
+        }
+        msg.textContent = 'Couldn’t start a refresh from here' + (last && last.code ? ' (' + last.code + ')' : '') + '. Only the radar’s owner can trigger it; otherwise it refreshes every Tuesday.';
+        btn.disabled = false;
+      };
+      const btns = Array.from(document.querySelectorAll('#refresh-btn'));
+      btns.forEach((b) => b.addEventListener('click', handler));
+      return { btns, handler };
+    },
+    update: () => {},
+    unmount: (msg, m) => { if (m) m.btns.forEach((b) => b.removeEventListener('click', m.handler)); }
+  });
+})();
+</script>
